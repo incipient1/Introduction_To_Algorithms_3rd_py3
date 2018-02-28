@@ -217,3 +217,5 @@ $n^{2}$|3.16e+01||||||
 $n^{3}$|1.00e+01||||||
 $2^{n}$|9.97e+00||||||
 $n!$|6.00e+00||||||
+
+<img src="https://latex.codecogs.com/gif.latex?ax^{2}&space;&plus;&space;by^{2}&space;&plus;&space;c&space;=&space;0" title="ax^{2} + by^{2} + c = 0" />
