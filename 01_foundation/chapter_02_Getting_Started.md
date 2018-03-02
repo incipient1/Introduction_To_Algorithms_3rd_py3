@@ -150,4 +150,237 @@ if __name__ == '__main__':
 
 #### 2.3-1&ensp;说明归并排序在数组A=[3,41,52,26,38,57,9,49]上的操作
 
-1. 
+<center>3,41,52,26,38,57,9,49</center>
+<center>|</center>
+<center>(3,41),(26,52),(38,57)(9,49)</center>
+<center>|</center>
+<center>(3,26,41,52),(9,38,49,57)</center>
+<center>|</center>
+<center>(3,9,26,38,41,49,52,57)</center>
+
+#### 2.3-2&ensp;不使用哨兵的merge_sort
+
+
+```python
+def merge_sort_noguard(A,p,r):
+    if p < r:
+        q = int(0.5*(p + r))
+        merge_sort_noguard(A,p,q)
+        merge_sort_noguard(A,q+1,r)
+        return merge_noguard(A,p,q,r)
+
+def merge_noguard(A,p,q,r):
+    L, R = [], []
+    for i in range(p,q+1):
+        L.append(A[i])
+        
+    for j in range(q+1,r):
+        R.append(A[j])
+    
+    i, j = 0, 0
+    for k in range(p,r):
+        if i == len(L):
+            A[k] = R[j]
+            j += 1
+        elif j == len(R):
+            A[k] = L[i]
+            i += 1
+        elif L[i] <= R[j]:
+            A[k] = L[i]
+            i += 1
+        else:
+            A[k] = R[j]
+            j += 1
+    
+    return A
+```
+
+
+```python
+A = [4,9,78,99,100,65,97,237]
+merge_sort_noguard(A,0,len(A))
+```
+
+
+
+
+    [4, 9, 65, 78, 97, 99, 100, 237]
+
+
+
+#### 2.3-3&ensp;证明$T(n)=n\lg n$
+
+1. 当n=2时，$T(n) = nlgn = 2\lg2 = 2*1 = 2$<br>
+2. 当$n=2^k,k>1$时，$2T(n/2)+n=2[\frac{2^{k}}{2}*\lg\frac{2^{k}}{2})+2^{k}$=$2((k-1)*2^{k-1})+2^{k}=k2^{k}=n\lg{n} =T(n)$
+
+
+#### 2.3-4&ensp;为插入排序的最坏情况运行时间写一个递归式
+
+最坏情况：逆序<br>
+运行时间：$T(n)=\begin{cases}
+0，若n=1\\
+T(n-1) + n-1，若n>1\\
+\end{cases}$
+
+#### 2.3-5&ensp;二分查找
+
+
+```python
+def binary_search(A,p,q,v):
+    m = int(0.5*(p + q))
+    if p+1 >= q:
+        return "NIL"
+    elif v == A[m]:
+        return m
+    elif v > A[m]:
+        return binary_search(A,m,q,v)
+    elif v < A[m]:
+        return binary_search(A,p,m,v)
+    else:
+        return "NIL"
+
+if __name__ == '__main__':
+    A = [1,7,12,15,16,19]
+    v = 2
+    p = 0
+    q = len(A)
+    print(binary_search(A,p,q,v))
+```
+
+    NIL
+    
+
+
+```python
+def binary_search(A,v):
+    lower = 0
+    high = len(A)
+    while lower <= high:
+        m = int((lower + high)*0.5)
+        if v == A[m]:
+            return m
+        elif v > A[m]:
+            lower = m +1 
+        elif v < A[m]:
+            high = m-1
+    else:
+        return "NIL"
+    
+if __name__ == '__main__':
+    A = [1,7,12,15,16,19]
+    v = 20
+    p = 0
+    q = len(A)
+    print(binary_search(A,v))
+```
+
+
+    ---------------------------------------------------------------------------
+
+    IndexError                                Traceback (most recent call last)
+
+    <ipython-input-39-2c85ac6f53a9> in <module>()
+         18     p = 0
+         19     q = len(A)
+    ---> 20     print(binary_search(A,v))
+    
+
+    <ipython-input-39-2c85ac6f53a9> in binary_search(A, v)
+          4     while lower <= high:
+          5         m = int((lower + high)*0.5)
+    ----> 6         if v == A[m]:
+          7             return m
+          8         elif v > A[m]:
+    
+
+    IndexError: list index out of range
+
+
+#### 2.3-7&ensp;描述一个算法，使其在数组中找到两数之和为x，这个算法的运行时间为$\Theta(nlgn )$
+
+1. 依次取出数组左边的元素key，这一步循环n次
+2. 然后在右边剩余元素中查找x-key，使用二分查找最差情况（找不到）需要运行$(n-1)*lg(n-1)$
+3. 总运行时间为$\begin{equation*}\sum\limits_{i=2}^{n}[(i-1)lg(i-1)]\end{equation*}$
+4. 根据$\Theta($$\begin{equation*}\sum\limits_{k=1}^{n}f(k)\end{equation*}$$)=$$\begin{equation*}\sum\limits_{k=1}^{n}\Theta (f(k))\end{equation*}$，则总运行时间为$\Theta(nlgn)$
+
+### 2.3&ensp;思考题
+
+#### 2-1&ensp;在归并排序中对小数组采用插入排序
+
+a.&ensp;最坏情况时完成$\frac{n}{k}$个长度为k的子表用时为$\frac{n}{k}*\Theta(k^{2})=\Theta(nk)$<br>
+b.&ensp;在最坏情况下合并2个k子表，将其变成一个2k子表，用时:$\Theta(2k)$，有$\frac{n}{k}$个k子表需要合并，用时$\frac{n}{2k}*\Theta(2k)=\Theta(n)$<br>
+&ensp;&ensp;&ensp;&ensp;k+k→2k，2k+2k→4k……$\frac{n}{2}+\frac{n}{2}→n$，这样的过程发生的次数是：$lg\frac{n}{k}$，所以运行时间为：$\Theta(n)*lg\frac{n}{k}=\Theta(nlg\frac{n}{k})$<br>
+c.&ensp;**n最大值是：**2<br>
+&ensp;&ensp;&ensp;要使$\Theta(nk+nlg\frac{n}{k})=\Theta(nlgn)$成立，使$k-lgk$最小,
+d.&ensp;
+
+#### 2-2&ensp;冒泡排序
+
+a. 不需要了<br>
+b. **循环不变式是：**在1……i处存放着序列中的较小值，并且已排好序<br>
+c. **终止条件是：**i=A.length<br>
+d. **最坏情况是：**逆序，运行时间是：$\begin{equation*}
+\sum\limits_{i=1}^{n-1}\end{equation*}($
+$\begin{equation*}
+\sum\limits_{j=i+1}^{n} 2
+\end{equation*})$=$\Theta(n^{3})$
+
+#### 2-3&ensp;霍纳规则的正确性
+
+a.&ensp;$\Theta(n)$<br>
+b.&ensp;需要运行cn次，和霍纳规则相比，性能相同
+
+
+```python
+def polynomial_evaluation(A,x):
+    return A[0] * x**0 + A[1] * x**1 + A[2] * x**2
+
+A = [1,2,4]
+x = 3
+polynomial_evaluation(A,x)
+```
+
+
+
+
+    43
+
+
+
+c.&ensp;循环终止时i=-1，带入后可得$y=\begin{equation*}\sum\limits_{k=0}^{n}a_{k}x^{k}\end{equation*}$<br>
+d.&ensp;循环不变式：y是正确的多项式，每循环一次，传入新值$a_i$，并且将y乘以x
+
+#### 2-4&ensp;逆序对
+
+a.&ensp;(0,4),(1,4),(2,3),(2,4),(3,4)<br>
+b.&ensp;**最多逆序对：**为逆序集合时，逆序对数量为：$num = \begin{equation*}\sum\limits_{i=1}^{n-1}n-i\end{equation*}=\frac{1}{2}n(n-1)$<br>
+c.&ensp;T(n) = c\*num,c为常数<br>
+d.&ensp;确定逆序对数量的算法，运行时间为：$\Theta(n^2)$
+
+
+```python
+def inversion(A):
+    num = 0
+    for i in range(len(A)-1):
+        for j in range(i+1,len(A)):
+            if A[i] > A[j]:
+                num += 1
+    return num
+
+A = [2,3,8,6,1]
+inversion(A)
+```
+
+
+
+
+    5
+
+
+
+&ensp;&ensp;运行时间为：$\Theta(nlgn)$
+
+
+```python
+
+```
