@@ -357,8 +357,3 @@ inversion(A)
 
 
 &ensp;&ensp;运行时间为：$\Theta(nlgn)$
-
-
-```python
-
-```
