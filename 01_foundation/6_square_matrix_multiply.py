@@ -106,14 +106,14 @@ class Matrix(object):
         result.row_list = dic[block][0]
         result.col_list = dic[block][1]
         return result
-
-a = [[2,-7,5,-3],
-     [5,-7,9,-7],
-     [-3,-6,8,1],
-     [1,0,-2,-1]]
-b = [[4,8,-12,5],
-     [2,1,9,4],
-     [12,23,-21,5],
-     [8,-3,0,7]]
-c = matrix_multiply(a, b)
-pprint.pprint(c)
+if __name__ == '__main__':
+    a = [[2,-7,5,-3],
+         [5,-7,9,-7],
+         [-3,-6,8,1],
+         [1,0,-2,-1]]
+    b = [[4,8,-12,5],
+         [2,1,9,4],
+         [12,23,-21,5],
+         [8,-3,0,7]]
+    c = matrix_multiply(a, b)
+    pprint.pprint(c)
