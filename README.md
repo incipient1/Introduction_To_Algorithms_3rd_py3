@@ -8,3 +8,5 @@
 &ensp;反复交换相邻的两个数，然后将较小者挤出去
 1. 最大子数组（分治策略）<br>
 &ensp;已实现矩阵的行、列必须是2^n(n为正整数)
+## 02_02_sorting_and_order_statistics
+5. 堆排序heap_sort<br>
