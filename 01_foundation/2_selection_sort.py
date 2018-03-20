@@ -6,8 +6,6 @@ def selection_sort(a):
             if a[j] < min_a:
                 min_a = a[j]
                 min_index = j
-            else:
-                pass
 
         a[i], a[min_index] = min_a, a[i]
 
