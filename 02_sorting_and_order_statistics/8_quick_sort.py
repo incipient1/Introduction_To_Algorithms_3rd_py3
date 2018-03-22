@@ -17,7 +17,7 @@ def quick_sort(A,p,r):
 
     return A
 
-A = [2,8,7,1,3,5,6,4]
+A = [2,8,7,1,3,5,6,4,3]
 p = 0
 r = len(A)-1
 print(quick_sort(A,p,r))
