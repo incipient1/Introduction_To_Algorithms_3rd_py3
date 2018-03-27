@@ -18,3 +18,4 @@
 * 最初版本quick_sort_hoare，暂时未处理相同元素的数组
 * 针对相同元素的随机化版本randomized_quick_sort_equal
 7. 计数排序counting_sort<br>
+找到数字排列的位置，然后将其放到相应位置。仅能实现非负整数的排序。
